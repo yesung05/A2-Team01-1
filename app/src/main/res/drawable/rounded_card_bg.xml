@@ -1,0 +1,7 @@
+<!-- res/drawable/rounded_card_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#fdfdfd"/> <!-- 카드 배경색 (원하는 색으로 바꾸세요) -->
+    <corners android:radius="16dp"/> <!-- 라운드 정도 -->
+</shape>
