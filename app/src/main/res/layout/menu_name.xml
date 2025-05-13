@@ -14,8 +14,8 @@
         android:text="오늘은 매콤한 000은 어떠신가요?"
         android:textColor="#A6A6A6"
         android:textSize="16sp"
+        android:layout_marginTop="32dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_margin="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -24,10 +24,10 @@
         android:id="@+id/circlePlaceholder"
         android:layout_width="310dp"
         android:layout_height="310dp"
-        android:translationY="152px"
+        android:translationY="152dp"
         android:background="@drawable/circle_background"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/questionText"
-        app:layout_constraintTop_margin="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -37,14 +37,14 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:text="식당 이름"
-        android:translationY="250px"
+        android:translationY="250dp"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
         android:background="#FCE3CF"
         android:textColor="#000000"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/circlePlaceholder"
-        app:layout_constraintTop_margin="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.7" />
@@ -56,30 +56,27 @@
         android:layout_height="50dp"
         android:text="뒤로"
         android:backgroundTint="#FCE3CF"
-        android:translationY="350px"
+        android:translationY="350dp"
         android:textColor="#000000"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintTop_toBottomOf="@id/restaurantName"
-        app:layout_constraintTop_margin="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintStart_margin="40dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- 버튼: 다시 -->
-
-    <!-- 하단 네비게이션 바 -->
     <Button
         android:id="@+id/retryButton"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="120dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="40dp"
         android:backgroundTint="#FCE3CF"
         android:text="다시"
         android:textColor="#000000"
-        app:layout_constraintEnd_margin="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_margin="24dp"
-        app:layout_constraintTop_toBottomOf="@id/restaurantName" />
+        app:layout_constraintTop_toBottomOf="@id/restaurantName"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- 하단 네비게이션 바 -->
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
@@ -89,9 +86,6 @@
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
