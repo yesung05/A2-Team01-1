@@ -1,212 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#FFF3DE">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/weatherText"
+    <!-- 기존 ConstraintLayout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FDF5E6"
-        android:gravity="left"
-        android:paddingTop="24dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="오늘은 날씨가 많이 춥네요.. 🥶\n몸이 따뜻해지는 음식을 드시는 것이 좋겠어요"
-        android:textColor="#5B5B5B"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="#FFF3DE"
+        tools:context=".MainActivity"
+        android:visibility="visible"
+        >
 
-    <LinearLayout
-        android:id="@+id/recommendLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/weatherText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <!-- 기존 레이아웃 내용들 생략 (전체 복사해서 넣으면 됨) -->
+        <!-- ... -->
 
-        <FrameLayout
-            android:id="@+id/overlayButton"
-            android:layout_width="380dp"
-            android:layout_height="380dp"
-            android:layout_margin="8dp">
-
-            <ImageButton
-                android:id="@+id/recommendBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/group_33"
-                android:background="@android:color/transparent"
-                android:scaleType="centerCrop"
-                android:contentDescription="추천 받기" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center|bottom"
-                android:paddingBottom="40dp"
-                android:text="추천 받기"
-                android:textColor="#282828"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-        </FrameLayout>
         <TextView
+            android:id="@+id/weatherText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="오늘의 추천 식당 🍴"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
+            android:background="#FDF5E6"
+            android:gravity="left"
             android:paddingLeft="8dp"
+            android:paddingTop="24dp"
+            android:paddingRight="8dp"
+            android:text="오늘은 날씨가 많이 춥네요.. 🥶\n몸이 따뜻해지는 음식을 드시는 것이 좋겠어요"
+            android:textColor="#5B5B5B"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textSize="20sp"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <LinearLayout
+            android:id="@+id/recommendLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/weatherText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <FrameLayout
+                android:id="@+id/overlayButton"
+                android:layout_width="380dp"
+                android:layout_height="380dp"
+                android:layout_margin="8dp">
+
+                <ImageButton
+                    android:id="@+id/recommendBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/group_33"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="추천 받기" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center|bottom"
+                    android:paddingBottom="40dp"
+                    android:text="추천 받기"
+                    android:textColor="#282828"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="오늘의 추천 식당 🍴"
+                android:layout_marginTop="24dp"
+                android:paddingLeft="8dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                >
+                <!--수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중-->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:id="@+id/square1_Frame"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.5">
+
+                    <ImageView
+                        android:id="@+id/recom_sq_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:layout_margin="4dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/rectangle_2" />
+
+                    <ImageView
+                        android:id="@+id/recom_restaurent_img1"
+                        android:layout_width="170dp"
+                        android:layout_height="170dp"
+                        android:layout_gravity="top|center"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/restaurant_img" />
+
+                    <TextView
+                        android:id="@+id/recom_restaurant1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:layout_marginBottom="24dp"
+                        android:textSize="20dp"
+                        android:textColor="#282828"
+                        android:textStyle="bold"
+                        android:text="식당명1" />
+
+
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:id="@+id/square2_Frame"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.5">
+
+                    <ImageView
+                        android:id="@+id/recom_sq_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:layout_margin="4dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/rectangle_2" />
+
+                    <ImageView
+                        android:id="@+id/recom_restaurent_img2"
+                        android:layout_width="170dp"
+                        android:layout_height="170dp"
+                        android:layout_gravity="top|center"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/restaurant_img" />
+
+                    <TextView
+                        android:id="@+id/recom_restaurant2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:layout_marginBottom="24dp"
+                        android:textSize="20dp"
+                        android:textColor="#282828"
+                        android:textStyle="bold"
+                        android:text="식당명2" />
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/seeRestmain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:background="#FFF3DE"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp"
+            android:layout_margin="16dp"
             >
-            <!--수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중-->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:id="@+id/square1_Frame"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.5">
 
-                <ImageView
-                    android:id="@+id/recom_sq_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:layout_margin="4dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/rectangle_2" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerView1"/>
 
-                <ImageView
-                    android:id="@+id/recom_restaurent_img1"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_gravity="top|center"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/restaurant_img" />
-
-                <TextView
-                    android:id="@+id/recom_restaurant1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|bottom"
-                    android:layout_marginBottom="24dp"
-                    android:textSize="20dp"
-                    android:textColor="#282828"
-                    android:textStyle="bold"
-                    android:text="식당명1" />
-
-
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:id="@+id/square2_Frame"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.5">
-
-                <ImageView
-                    android:id="@+id/recom_sq_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:layout_margin="4dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/rectangle_2" />
-
-                <ImageView
-                    android:id="@+id/recom_restaurent_img2"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_gravity="top|center"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/restaurant_img" />
-
-                <TextView
-                    android:id="@+id/recom_restaurant2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|bottom"
-                    android:layout_marginBottom="24dp"
-                    android:textSize="20dp"
-                    android:textColor="#282828"
-                    android:textStyle="bold"
-                    android:text="식당명2" />
-            </FrameLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:background="#FDF5E6"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:paddingBottom="24dp"
+        android:orientation="horizontal"
         android:paddingTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:paddingBottom="24dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_gravity="bottom">
 
         <ImageButton
-            android:id="@+id/rest_recom_nav_sel"
+            android:id="@+id/viewRecom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginHorizontal="32dp"
+            android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Restaurant Selection"
-            app:srcCompat="@drawable/restru_sel"
-            android:layout_weight="1"/>
+            app:srcCompat="@drawable/restru_sel" />
 
         <ImageButton
-            android:id="@+id/view_rest_unsel"
+            android:id="@+id/viewRest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
+            android:layout_weight="1"
             android:alpha="0.5"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="View Restaurant"
-            app:srcCompat="@drawable/view_rest_sel"
-            android:layout_weight="1"/>
+            app:srcCompat="@drawable/view_rest_sel" />
 
         <ImageButton
-            android:id="@+id/setting_unsel"
+            android:id="@+id/viewSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
+            android:layout_weight="1"
             android:alpha="0.5"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Settings"
-            app:srcCompat="@drawable/setting_sel"
-            android:layout_weight="1"/>
+            app:srcCompat="@drawable/setting_sel" />
 
     </LinearLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

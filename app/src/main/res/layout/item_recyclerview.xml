@@ -1,0 +1,28 @@
+<!-- res/layout/item_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="8dp"
+    android:gravity="top"
+    android:background="#ffffff"
+    android:padding="8dp"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/restaurantIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/bab"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="식당 아이콘" />
+    <TextView
+        android:id="@+id/restaurantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="식당 이름"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"/>
+</LinearLayout>
