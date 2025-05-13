@@ -2,7 +2,9 @@ package kr.ac.dongyang.ailabproj1;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
 
     ImageButton mainBtn, showRecomBtn, showRestBtn, showSettingBtn;
-    ConstraintLayout main, showRestMain, showSettingMain;
+
+    ImageButton recomBackBtn, recomReBtn;
+    TextView recomRslt;
+    ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +31,18 @@ public class MainActivity extends AppCompatActivity {
         showSettingBtn = findViewById(R.id.viewSetting);
         main = findViewById(R.id.main);
         showRestMain = findViewById(R.id.seeRestmain);
+        recomRlstMain = findViewById(R.id.recom_rslt);
 
+
+        //추천 결과 페이지 옵젝트
+        recomBackBtn = findViewById(R.id.backButton);
+        recomReBtn = findViewById(R.id.retryButton);
+        recomRslt = findViewById(R.id.rsltText);
+
+
+        main.setVisibility(View.VISIBLE);
+
+        // 근처 식당 보기 네비게이션
         showRestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 // 버튼 id 재설정
                 showRestMain.setVisibility(View.VISIBLE);
                 main.setVisibility(View.GONE);
+                recomRlstMain.setVisibility(View.GONE);
+
                 showRestBtn.setAlpha(1f);
                 showRecomBtn.setAlpha(0.5f);
                 showSettingBtn.setAlpha(0.5f);
@@ -48,27 +66,37 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
 
                 // LayoutManager 설정 (가로 스크롤을 위한 설정)
-                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
 
             }
         });
-
+        // 식당 추천 네비게이션
         showRecomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showRestMain.setVisibility(View.GONE);
                 main.setVisibility(View.VISIBLE);
+                recomRlstMain.setVisibility(View.GONE);
+
                 showRecomBtn.setAlpha(1f);
                 showRestBtn.setAlpha(0.5f);
                 showSettingBtn.setAlpha(0.5f);
             }
         });
+
+        //추천 버튼 눌렀을시 동작
         mainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 다른 레이아웃 전환
-                setContentView(R.layout.todays_restraurent);
+                main.setVisibility(View.GONE);
+                showRestMain.setVisibility(View.GONE);
+                recomRlstMain.setVisibility(View.VISIBLE);
+
+
             }
         });
+
+
     }
 }
