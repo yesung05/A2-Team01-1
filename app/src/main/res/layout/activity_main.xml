@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="#00AD9494">
 
+
+
     <!-- 기존 ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -21,13 +23,11 @@
         <TextView
             android:id="@+id/weatherText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="69dp"
             android:layout_marginTop="28dp"
             android:background="#FDF5E6"
             android:gravity="left"
-            android:paddingLeft="8dp"
-            android:paddingTop="24dp"
-            android:paddingRight="8dp"
+            android:padding="8dp"
             android:text="오늘은 날씨가 많이 춥네요.. 🥶\n몸이 따뜻해지는 음식을 드시는 것이 좋겠어요"
             android:textColor="#5B5B5B"
             android:textSize="18sp"
@@ -177,7 +177,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/seeRestmain"
@@ -327,6 +328,310 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF3DE"
+        android:visibility="gone"
+        android:id="@+id/settingMain"
+        >
+
+        <TextView
+            android:id="@+id/recomText"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:layout_marginTop="28dp"
+            android:background="#FDF5E6"
+            android:gravity="left"
+            android:padding="8dp"
+            android:text="원하는 느낌을 선택해보세요 \n AI가 식당을 추천해줍니다! 🍽️"
+            android:textColor="#5B5B5B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <!-- 조건 선택 영역 -->
+        <ScrollView
+            android:id="@+id/filter_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/recomText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/category_word"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="선호 카테고리"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+
+                    android:padding="4dp"/>
+
+                <!-- 카테고리 선택 -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:id="@+id/foodCategory"
+                    app:layout_constraintTop_toBottomOf="@+id/category_word"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="0dp">
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_1"
+                            android:contentDescription="Category 1" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_2"
+                            android:contentDescription="Category 2" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_3"
+                            android:contentDescription="Category 3" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_4"
+                            android:contentDescription="Category 4" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_5"
+                            android:contentDescription="Category 5" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_6"
+                            android:contentDescription="Category 6" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_7"
+                            android:contentDescription="Category 7" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_8"
+                            android:contentDescription="Category 8" />
+
+                        <ImageButton
+                            android:layout_width="100dp"
+                            android:layout_height="132dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_food_category_9"
+                            android:contentDescription="Category 9" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+
+                <!-- 나이대 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="나이대"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="영유아" android:layout_weight="1"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="어린이" android:layout_weight="1"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="청소년" android:layout_weight="1"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="청년" android:layout_weight="1"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="중년" android:layout_weight="1"/>
+                </RadioGroup>
+
+                <!-- 누구랑 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="누구랑"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="혼밥" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="친구랑" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="회사에서" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="가족이랑" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="연인과" android:layout_weight="1"/>
+                </RadioGroup>
+
+                <!-- 컨디션 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="컨디션"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="행복" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="슬픔" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="화남" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="우울" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="피곤" android:layout_weight="1"/>
+                </RadioGroup>
+
+                <!-- 날씨 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="날씨"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="맑음" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="눈" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="흐림" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="더움" android:layout_weight="1"/>
+                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="추움" android:layout_weight="1"/>
+                </RadioGroup>
+
+                <!-- 주류 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="주류"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="소주"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="맥주"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="막걸리"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="보드카"/>
+                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="와인"/>
+                </RadioGroup>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:id="@+id/cpLayout"
+                    android:layout_gravity="bottom"
+                    android:paddingTop="16dp"
+                    >
+                    <TextView
+                        android:id="@+id/Copyrights"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Copyrightⓒ2025 SYB, LMC, KKM, CYS \nAll rights reserved."
+                        android:textSize="16sp"
+                        android:layout_weight="0.7"
+                        android:layout_gravity="left"/>
+                    <TextView
+                        android:id="@+id/version"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="v0.0.1"
+                        android:textSize="16sp"
+                        android:layout_weight="0.3"
+                        android:textAlignment="textEnd"
+                        />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+
+
+
+
+<!--        &lt;!&ndash; 하단 네비게이션 &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/bottom_nav"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:background="#F2E9E1"-->
+<!--            android:gravity="center"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent">-->
+<!--        </LinearLayout>-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
@@ -374,5 +679,7 @@
             app:srcCompat="@drawable/setting_sel" />
 
     </LinearLayout>
+
+
 
 </FrameLayout>

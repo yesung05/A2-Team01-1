@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         showSettingBtn = findViewById(R.id.viewSetting);
         main = findViewById(R.id.main);
         showRestMain = findViewById(R.id.seeRestmain);
+        showSettingMain = findViewById(R.id.settingMain);
         recomRlstMain = findViewById(R.id.recom_rslt);
 
 
@@ -48,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 레이아웃 변경
                 // 버튼 id 재설정
-                showRestMain.setVisibility(View.VISIBLE);
                 main.setVisibility(View.GONE);
                 recomRlstMain.setVisibility(View.GONE);
+                showSettingMain.setVisibility(View.GONE);
 
+                showRestMain.setVisibility(View.VISIBLE);
                 showRestBtn.setAlpha(1f);
                 showRecomBtn.setAlpha(0.5f);
                 showSettingBtn.setAlpha(0.5f);
@@ -75,8 +77,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showRestMain.setVisibility(View.GONE);
-                main.setVisibility(View.VISIBLE);
+                showSettingMain.setVisibility(View.GONE);
                 recomRlstMain.setVisibility(View.GONE);
+                main.setVisibility(View.VISIBLE);
+
 
                 showRecomBtn.setAlpha(1f);
                 showRestBtn.setAlpha(0.5f);
@@ -91,12 +95,20 @@ public class MainActivity extends AppCompatActivity {
                 // 다른 레이아웃 전환
                 main.setVisibility(View.GONE);
                 showRestMain.setVisibility(View.GONE);
+                showSettingMain.setVisibility(View.GONE);
                 recomRlstMain.setVisibility(View.VISIBLE);
 
 
             }
         });
 
+        showSettingBtn.setOnClickListener(click -> {
+            main.setVisibility(View.GONE);
+            showRestMain.setVisibility(View.GONE);
+            recomRlstMain.setVisibility(View.GONE);
+            showSettingMain.setVisibility(View.VISIBLE);
+
+        });
 
     }
 }
