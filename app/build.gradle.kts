@@ -32,7 +32,9 @@ android {
 }
 
 dependencies {
-    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
+
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.13.4")
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation(libs.appcompat)

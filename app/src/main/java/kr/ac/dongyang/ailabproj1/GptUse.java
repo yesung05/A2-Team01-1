@@ -20,10 +20,12 @@ import okhttp3.Response;
 
 public class GptUse {
 
-    private static String apiKey = "API_KEYS";
+    private static String apiKey = "INPUT_YOUR_KEY";
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client;
     private final Gson gson;
+
+    static String gptResponce;
     String[] mainMenus = {
             "Gukbap",
             "Stews",
@@ -107,8 +109,8 @@ public class GptUse {
                 .append("Recommend exactly 5 restaurants that best match the user’s preferences.\n")
                 .append("Respond in a structured JSON format like this:\n")
                 .append("[\n")
-                .append("  {index: 1, restaurantName: ..., category: ..., mainTheme: ...},\n")
-                .append("  {index: 2, restaurantName: ..., category: ..., mainTheme: ...},\n")
+                .append("  {index: 1},\n")
+                .append("  {index: 2},\n")
                 .append("  ...\n")
                 .append("]\n\n")
                 .append("Use one of the following for the 'mainTheme' field:\n")
@@ -160,6 +162,7 @@ public class GptUse {
                         .getAsJsonObject("message")
                         .get("content").getAsString();
 
+                gptResponce = reply.toString();
                 System.out.println(reply.trim());;
             }
         });
