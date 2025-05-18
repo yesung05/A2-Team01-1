@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 prompt = toScript();
                 GptUse gptSession = new GptUse();
                 gptSession.requestRecommendation();
+
+                new GptParse();
             }
         });
         // 근처 식당 보기 네비게이션
