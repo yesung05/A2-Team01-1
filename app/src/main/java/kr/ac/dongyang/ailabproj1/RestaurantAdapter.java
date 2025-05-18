@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder> {
     private int[] restaurantIcons;
-
+    private String [] restaurantNames;
     // Constructor
-    public RestaurantAdapter(int[] restaurantIcons) {
+    public RestaurantAdapter(int[] restaurantIcons, String[] restaurantNames) {
         this.restaurantIcons = restaurantIcons;
+        this.restaurantNames = restaurantNames;
     }
 
     @Override
@@ -26,6 +27,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
     public void onBindViewHolder(RestaurantViewHolder holder, int position) {
         // 각 항목에 대한 데이터 바인딩
         holder.restaurantIcon.setImageResource(restaurantIcons[position]);
+        holder.restaurantName.setText(restaurantNames[position]);
     }
 
     @Override
