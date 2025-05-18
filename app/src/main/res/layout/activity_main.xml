@@ -479,7 +479,9 @@
 
 
                 <!-- 나이대 -->
+                <!-- 나이대 -->
                 <TextView
+                    android:id="@+id/text_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -488,18 +490,50 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/group_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="영유아" android:layout_weight="1"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="어린이" android:layout_weight="1"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="청소년" android:layout_weight="1"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="청년" android:layout_weight="1"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:text="중년" android:layout_weight="1"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_infant"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="영유아"
+                        android:layout_weight="1"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_child"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="어린이"
+                        android:layout_weight="1"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_teen"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="청소년"
+                        android:layout_weight="1"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_young"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="청년"
+                        android:layout_weight="1"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_middle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="중년"
+                        android:layout_weight="1"/>
                 </RadioGroup>
 
                 <!-- 누구랑 -->
                 <TextView
+                    android:id="@+id/text_who"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -508,18 +542,50 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/radioGroup_who"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="혼밥" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="친구랑" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="회사에서" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="가족이랑" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="연인과" android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_alone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="혼밥"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_friend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="친구랑"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="회사에서"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_family"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가족이랑"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_lover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="연인과"
+                        android:layout_weight="1"/>
                 </RadioGroup>
 
                 <!-- 컨디션 -->
                 <TextView
+                    android:id="@+id/text_condition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -528,18 +594,50 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/radioGroup_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="행복" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="슬픔" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="화남" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="우울" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="피곤" android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_happy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="행복"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_sad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="슬픔"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_angry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="화남"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_depressed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="우울"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_tired"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="피곤"
+                        android:layout_weight="1"/>
                 </RadioGroup>
 
                 <!-- 날씨 -->
                 <TextView
+                    android:id="@+id/text_weather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -548,18 +646,50 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/radioGroup_weather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="맑음" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="눈" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="흐림" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="더움" android:layout_weight="1"/>
-                    <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="추움" android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="맑음"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_snow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="눈"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_cloudy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="흐림"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_hot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="더움"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_cold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추움"
+                        android:layout_weight="1"/>
                 </RadioGroup>
 
                 <!-- 주류 -->
                 <TextView
+                    android:id="@+id/text_drink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -568,15 +698,47 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/group_drink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="소주"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="맥주"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="막걸리"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="보드카"/>
-                    <CheckBox android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="와인"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_soju"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="소주"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_beer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="맥주"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_makgeolli"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="막걸리"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_vodka"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="보드카"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_wine"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="와인"/>
                 </RadioGroup>
+
 
                 <LinearLayout
                     android:orientation="horizontal"
