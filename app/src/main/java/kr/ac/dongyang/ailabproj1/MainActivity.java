@@ -1,13 +1,16 @@
 package kr.ac.dongyang.ailabproj1;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +18,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton mainBtn, showRecomBtn, showRestBtn, showSettingBtn;
 
     ImageButton recomBackBtn, recomReBtn;
-    TextView recomRslt;
+    TextView recomRslt, recom_text, main_text;
     ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain;
 
     // 나이대 (CheckBox)
@@ -32,13 +40,31 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton[] whoRadioButtons, conditionRadioButtons, weatherRadioButtons;
     private CheckBox[] drinkCheckBoxes;
 
+    private ImageButton [] categorys;
+//    private boolean [] buttonSel = {false, false, false, false, false ,false, false, false};
     static String prompt;
+    ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> ageList = new ArrayList<String>();
     ArrayList<String> whoList = new ArrayList<String>();
     ArrayList<String> conditionList = new ArrayList<String>();
     ArrayList<String> weatherList = new ArrayList<String>();
     ArrayList<String> drinkList = new ArrayList<String>();
 
+    String [] texts ={
+            "빵만 있다면 웬만한 슬픔은 견딜 수 있다. \n -Cervantes",
+            "음식으로 못 고치는 병은 의사도 못 고친다. \n -Hippocrates",
+            "요리사는 행복을 파는 사람이다 \n -Michel Bras",
+            "음식에 대한 사랑처럼 진실된 사랑은 없다. \n -Gerorge Bernard Shaw" ,
+            "배가 비어있으면 정신도 빌 수밖에 없다. \n -Honore de Balzac",
+            "배고픈 자는 음식을 가리지 않는다 \n -맹자",
+            "잘못된 음식이란 것은 없다 \n -Sean Stewart",
+            "잘 먹는 것은 결코 하찮은 기술이 아니다 \n -Michel de Montaigne",
+            "식욕 이상으로 진실한 신념은 없다 \n -John Cisna"
+    };
+    ImageView recomRlstImg;
+    ArrayList <Integer> indexList;
+    RestrauntDatas restrauntReturn = new RestrauntDatas();
+    int retryCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
         showRestMain = findViewById(R.id.seeRestmain);
         showSettingMain = findViewById(R.id.settingMain);
         recomRlstMain = findViewById(R.id.recom_rslt);
-
-
+        recom_text = findViewById(R.id.recom_text);
+        main_text = findViewById(R.id.weatherText);
         //추천 결과 페이지 옵젝트
         recomBackBtn = findViewById(R.id.backButton);
         recomReBtn = findViewById(R.id.retryButton);
         recomRslt = findViewById(R.id.rsltText);
-
+        recomRlstImg = findViewById(R.id.rslt_img);
 
         ageCheckBoxes = new CheckBox[]{
                 findViewById(R.id.checkbox_infant),
@@ -104,15 +130,28 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.checkbox_vodka),
                 findViewById(R.id.checkbox_wine)
         };
+
+        categorys = new ImageButton[]{
+                findViewById(R.id.category1),
+                findViewById(R.id.category2),
+                findViewById(R.id.category3),
+                findViewById(R.id.category4),
+                findViewById(R.id.category5),
+                findViewById(R.id.category6),
+                findViewById(R.id.category7),
+                findViewById(R.id.category8),
+        };
         main.setVisibility(View.VISIBLE);
 
-
+        main_text.setText(texts[(int) (Math.random() * texts.length)]);
 
         bottomNavBar();
         restrauntList();
 
 
         runSettings();
+
+
 
 
 
@@ -126,15 +165,46 @@ public class MainActivity extends AppCompatActivity {
                 showSettingMain.setVisibility(View.GONE);
                 recomRlstMain.setVisibility(View.VISIBLE);
                 prompt = toScript();
+                retryCount = 0;
                 GptUse gptSession = new GptUse();
                 gptSession.requestRecommendation();
 
-                new GptParse();
+
+                try {
+                    GptUse.latch.await();
+                    GptParse parse = new GptParse();
+
+                    try {
+                        indexList = parse.runParse();
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    getRslt();
+                    Toast.makeText(getApplicationContext(), indexList.toString(), Toast.LENGTH_SHORT).show();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+
             }
         });
         // 근처 식당 보기 네비게이션
-    }
+        recomReBtn.setOnClickListener(click -> {
+            if(retryCount < 5){
+                getRslt();
+            } else {
+                Toast.makeText(getApplicationContext(), "시도 가능한 횟수 초과", Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        recomBackBtn.setOnClickListener(click -> {
+            showRestMain.setVisibility(View.GONE);
+            showSettingMain.setVisibility(View.GONE);
+            recomRlstMain.setVisibility(View.GONE);
+            main.setVisibility(View.VISIBLE);
+        });
+    }
 
 
 
@@ -198,6 +268,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runSettings(){
+
+        //수정중
+        for(ImageButton ib : categorys){
+            ib.setOnClickListener(click ->{
+                Float alpha = ib.getAlpha();
+                if(alpha < 1f){
+                    ib.setAlpha(1f);
+                    categoryList.remove(ib.getContentDescription().toString());
+                } else {
+                    ib.setAlpha(0.5f);
+                    if(!categoryList.contains(ib.getContentDescription().toString())){
+                        categoryList.add(ib.getContentDescription().toString());
+                    }
+                }
+            });
+        }
+
+
+
         for(CheckBox cb : ageCheckBoxes){
             CheckBox finalCb = cb;
             cb.setOnClickListener(check -> {
@@ -249,6 +338,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printSettings(){
         System.out.println("--------------------");
+        System.out.println(categoryList);
         System.out.println(ageList);
         System.out.println(whoList);
         System.out.println(conditionList);
@@ -257,13 +347,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String toScript (){
-        String text = "ageGroup: " + ageList.toString() +
+        String text = "excludedCategory: " + categoryList.toString() +
+                " ageGroup: " + ageList.toString() +
                 " withWho: " + whoList.toString() +
                 " wether: " + weatherList.toString() +
                 " condition: " + conditionList.toString() +
                 " drink: " + drinkList.toString();
         System.out.println(text);
         return text;
+    }
+
+    public void getRslt(){
+        String[] restNames = restrauntReturn.getRestrauntName(indexList.get(retryCount));
+        recomRslt.setText(restNames[0]);
+        retryCount++;
+        recom_text.setText("오늘은 " + restNames[0] + "에서\n식사하시는것은 어떤가요?");
     }
 }
 
