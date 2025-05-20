@@ -155,47 +155,43 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
         //추천 버튼 눌렀을시 동작
-        mainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 1. UI 스레드에서 우선 로딩 화면 보여주기
-                main.setVisibility(View.GONE);
-                showRestMain.setVisibility(View.GONE);
-                showSettingMain.setVisibility(View.GONE);
-                recomRlstMain.setVisibility(View.GONE);
-                loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
+        mainBtn.setOnClickListener(click -> {
+            System.out.println("추천 버튼 눌림");
+            // 1. UI 스레드에서 우선 로딩 화면 보여주기
+            main.setVisibility(View.GONE);
+            showRestMain.setVisibility(View.GONE);
+            showSettingMain.setVisibility(View.GONE);
+            recomRlstMain.setVisibility(View.GONE);
+            loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
 
-                // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
-                new Thread(() -> {
-                    prompt = toScript();
-                    retryCount = 0;
-                    GptUse gptSession = new GptUse();
-                    gptSession.requestRecommendation();
+            // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
+            new Thread(() -> {
+                prompt = toScript();
+                retryCount = 0;
+                GptUse gptSession = new GptUse();
+                gptSession.requestRecommendation();
 
-                    try {
-                        GptUse.latch.await();  // GPT 응답 대기
-                        GptParse parse = new GptParse();
-                        indexList = parse.runParse();
+                try {
+                    GptUse.latch.await();  // GPT 응답 대기
+                    GptParse parse = new GptParse();
+                    indexList = parse.runParse();
 
-                        // 3. 결과 도착 후 UI 업데이트는 UI 스레드에서 수행
-                        runOnUiThread(() -> {
-                            loading.setVisibility(View.GONE);         // 로딩 숨기기
-                            recomRlstMain.setVisibility(View.VISIBLE); // 결과 레이아웃 보이기
-                            getRslt();
+                    // 3. 결과 도착 후 UI 업데이트는 UI 스레드에서 수행
+                    runOnUiThread(() -> {
+                        loading.setVisibility(View.GONE);         // 로딩 숨기기
+                        recomRlstMain.setVisibility(View.VISIBLE); // 결과 레이아웃 보이기
+                        getRslt();
 //                            Toast.makeText(getApplicationContext(), indexList.toString(), Toast.LENGTH_SHORT).show();
-                        });
+                    });
 
-                    } catch (InterruptedException | JsonProcessingException e) {
-                        e.printStackTrace();
+                } catch (InterruptedException | JsonProcessingException e) {
+                    e.printStackTrace();
 //                        runOnUiThread(() ->
 //                                Toast.makeText(getApplicationContext(), "추천 실패: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-//                        );
-                    }
+             }
+
                 }).start();  // <- Thread 시작
-            }
         });
 
         // 근처 식당 보기 네비게이션
@@ -355,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(drinkList);
     }
 
-    public String toScript (){
+    public String toScript(){
         String text = "excludedCategory: " + categoryList.toString() +
                 " ageGroup: " + ageList.toString() +
                 " withWho: " + whoList.toString() +
@@ -375,52 +371,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void imgChange(String value){
-        switch (value){
-            case "비빔밥":
-                recomRlstImg.setImageResource(R.drawable.bibimbap);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            case "우동":
-                recomRlstImg.setImageResource(R.drawable.backban);
-                recomRlstImg.setPadding(48, 48, 48, 48);//임시
-                break;
-            case "짜장면":
-            case "탕수육":
-                recomRlstImg.setImageResource(R.drawable.jajang);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            case "스테이크":
-                recomRlstImg.setImageResource(R.drawable.stake);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            case "파스타":
-            case "스파게티":
-                recomRlstImg.setImageResource(R.drawable.pasta);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            case "라멘":
-                recomRlstImg.setImageResource(R.drawable.ramen);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            case "피자":
-                break;
-            case "국밥":
-                recomRlstImg.setImageResource(R.drawable.gukbap);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            case "초밥":
-            case "스시":
-                recomRlstImg.setImageResource(R.drawable.susi);
-                recomRlstImg.setPadding(48, 48, 48, 48);
-                break;
-            default:
-                recomRlstImg.setImageResource(R.drawable.bab);
-                recomRlstImg.setPadding(48, 48, 48, 48);
+            switch (value) {
+                case "비빔밥":
+                    recomRlstImg.setImageResource(R.drawable.bibimbap);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "우동":
+                    recomRlstImg.setImageResource(R.drawable.backban);
+                    recomRlstImg.setPadding(48, 48, 48, 48);//임시
+                    break;
+                case "짜장면":
+                case "탕수육":
+                    recomRlstImg.setImageResource(R.drawable.jajang);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "스테이크":
+                    recomRlstImg.setImageResource(R.drawable.stake);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "파스타":
+                case "스파게티":
+                    recomRlstImg.setImageResource(R.drawable.pasta);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "라멘":
+                    recomRlstImg.setImageResource(R.drawable.ramen);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "피자":
+                    break;
+                case "국밥":
+                    recomRlstImg.setImageResource(R.drawable.gukbap);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "초밥":
+                case "스시":
+                    recomRlstImg.setImageResource(R.drawable.susi);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                default:
+                    recomRlstImg.setImageResource(R.drawable.bab);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
 
-        }
-
-
-
+            }
     }
-}
 
+}
