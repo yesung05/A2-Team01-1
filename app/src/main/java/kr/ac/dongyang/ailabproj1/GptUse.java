@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class GptUse {
 
-    private static String apiKey = "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";
+    private static String apiKey = "";
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client;
     private final Gson gson;
