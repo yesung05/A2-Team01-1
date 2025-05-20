@@ -8,14 +8,17 @@ import java.util.List;
 
 
 public class GptParse{
-    public static ArrayList<Integer> indexes = new ArrayList<>();
 
-    public void runParse() throws JsonProcessingException {
+
+    public ArrayList<Integer> runParse() throws JsonProcessingException {
+        ArrayList<Integer> indexes = new ArrayList<>();
         ObjectMapper objMap = new ObjectMapper();
         JsonNode jsonArray = objMap.readTree(GptUse.gptResponce);
 
         for (JsonNode node : jsonArray) {
             indexes.add(node.get("index").asInt());
         }
+        System.out.println(indexes.toString());
+        return indexes;
     }
 }

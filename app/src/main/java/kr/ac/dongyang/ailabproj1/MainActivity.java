@@ -1,13 +1,17 @@
 package kr.ac.dongyang.ailabproj1;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +19,21 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton mainBtn, showRecomBtn, showRestBtn, showSettingBtn;
 
     ImageButton recomBackBtn, recomReBtn;
-    TextView recomRslt;
-    ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain;
+    TextView recomRslt, recom_text, main_text;
+    ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain, loading;
 
     // 나이대 (CheckBox)
     private CheckBox[] ageCheckBoxes;
@@ -32,13 +41,32 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton[] whoRadioButtons, conditionRadioButtons, weatherRadioButtons;
     private CheckBox[] drinkCheckBoxes;
 
+    private ImageButton [] categorys;
+//    private boolean [] buttonSel = {false, false, false, false, false ,false, false, false};
     static String prompt;
+
+    ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> ageList = new ArrayList<String>();
     ArrayList<String> whoList = new ArrayList<String>();
     ArrayList<String> conditionList = new ArrayList<String>();
     ArrayList<String> weatherList = new ArrayList<String>();
     ArrayList<String> drinkList = new ArrayList<String>();
 
+    String [] texts ={
+            "빵만 있다면 웬만한 슬픔은 견딜 수 있다. \n -Cervantes",
+            "음식으로 못 고치는 병은 의사도 못 고친다. \n -Hippocrates",
+            "요리사는 행복을 파는 사람이다 \n -Michel Bras",
+            "음식에 대한 사랑처럼 진실된 사랑은 없다. \n -Gerorge Bernard Shaw" ,
+            "배가 비어있으면 정신도 빌 수밖에 없다. \n -Honore de Balzac",
+            "배고픈 자는 음식을 가리지 않는다 \n -맹자",
+            "잘못된 음식이란 것은 없다 \n -Sean Stewart",
+            "잘 먹는 것은 결코 하찮은 기술이 아니다 \n -Michel de Montaigne",
+            "식욕 이상으로 진실한 신념은 없다 \n -John Cisna"
+    };
+    ImageView recomRlstImg;
+    ArrayList <Integer> indexList;
+    RestrauntDatas restrauntReturn = new RestrauntDatas();
+    int retryCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
         showRestMain = findViewById(R.id.seeRestmain);
         showSettingMain = findViewById(R.id.settingMain);
         recomRlstMain = findViewById(R.id.recom_rslt);
-
-
+        recom_text = findViewById(R.id.recom_text);
+        main_text = findViewById(R.id.weatherText);
         //추천 결과 페이지 옵젝트
         recomBackBtn = findViewById(R.id.backButton);
         recomReBtn = findViewById(R.id.retryButton);
         recomRslt = findViewById(R.id.rsltText);
-
-
+        recomRlstImg = findViewById(R.id.rslt_img);
+        loading = findViewById(R.id.loading);
         ageCheckBoxes = new CheckBox[]{
                 findViewById(R.id.checkbox_infant),
                 findViewById(R.id.checkbox_child),
@@ -104,9 +132,20 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.checkbox_vodka),
                 findViewById(R.id.checkbox_wine)
         };
+
+        categorys = new ImageButton[]{
+                findViewById(R.id.category1),
+                findViewById(R.id.category2),
+                findViewById(R.id.category3),
+                findViewById(R.id.category4),
+                findViewById(R.id.category5),
+                findViewById(R.id.category6),
+                findViewById(R.id.category7),
+                findViewById(R.id.category8),
+        };
         main.setVisibility(View.VISIBLE);
 
-
+        main_text.setText(texts[(int) (Math.random() * texts.length)]);
 
         bottomNavBar();
         restrauntList();
@@ -117,24 +156,60 @@ public class MainActivity extends AppCompatActivity {
 
 
         //추천 버튼 눌렀을시 동작
-        mainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 다른 레이아웃 전환
-                main.setVisibility(View.GONE);
-                showRestMain.setVisibility(View.GONE);
-                showSettingMain.setVisibility(View.GONE);
-                recomRlstMain.setVisibility(View.VISIBLE);
+        mainBtn.setOnClickListener(click -> {
+            System.out.println("추천 버튼 눌림");
+            // 1. UI 스레드에서 우선 로딩 화면 보여주기
+            main.setVisibility(View.GONE);
+            showRestMain.setVisibility(View.GONE);
+            showSettingMain.setVisibility(View.GONE);
+            recomRlstMain.setVisibility(View.GONE);
+            loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
+
+            // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
+            new Thread(() -> {
                 prompt = toScript();
+                retryCount = 0;
                 GptUse gptSession = new GptUse();
                 gptSession.requestRecommendation();
 
-                new GptParse();
+                try {
+                    GptUse.latch.await();  // GPT 응답 대기
+                    GptParse parse = new GptParse();
+                    indexList = parse.runParse();
+
+                    // 3. 결과 도착 후 UI 업데이트는 UI 스레드에서 수행
+                    runOnUiThread(() -> {
+                        loading.setVisibility(View.GONE);         // 로딩 숨기기
+                        recomRlstMain.setVisibility(View.VISIBLE); // 결과 레이아웃 보이기
+                        getRslt();
+//                            Toast.makeText(getApplicationContext(), indexList.toString(), Toast.LENGTH_SHORT).show();
+                    });
+
+                } catch (InterruptedException | JsonProcessingException e) {
+                    e.printStackTrace();
+//                        runOnUiThread(() ->
+//                                Toast.makeText(getApplicationContext(), "추천 실패: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+             }
+
+                }).start();  // <- Thread 시작
+        });
+
+        // 근처 식당 보기 네비게이션
+        recomReBtn.setOnClickListener(click -> {
+            if(retryCount < 5){
+                getRslt();
+            } else {
+                Toast.makeText(getApplicationContext(), "시도 가능한 횟수 초과", Toast.LENGTH_SHORT).show();
             }
         });
-        // 근처 식당 보기 네비게이션
-    }
 
+        recomBackBtn.setOnClickListener(click -> {
+            showRestMain.setVisibility(View.GONE);
+            showSettingMain.setVisibility(View.GONE);
+            recomRlstMain.setVisibility(View.GONE);
+            main.setVisibility(View.VISIBLE);
+        });
+    }
 
 
 
@@ -198,6 +273,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runSettings(){
+
+        //수정중
+        for(ImageButton ib : categorys){
+            ib.setOnClickListener(click ->{
+                Float alpha = ib.getAlpha();
+                if(alpha < 1f){
+                    ib.setAlpha(1f);
+                    categoryList.remove(ib.getContentDescription().toString());
+                } else {
+                    ib.setAlpha(0.5f);
+                    if(!categoryList.contains(ib.getContentDescription().toString())){
+                        categoryList.add(ib.getContentDescription().toString());
+                    }
+                }
+            });
+        }
+
+
+
         for(CheckBox cb : ageCheckBoxes){
             CheckBox finalCb = cb;
             cb.setOnClickListener(check -> {
@@ -249,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printSettings(){
         System.out.println("--------------------");
+        System.out.println(categoryList);
         System.out.println(ageList);
         System.out.println(whoList);
         System.out.println(conditionList);
@@ -256,8 +351,9 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(drinkList);
     }
 
-    public String toScript (){
-        String text = "ageGroup: " + ageList.toString() +
+    public String toScript(){
+        String text = "excludedCategory: " + categoryList.toString() +
+                " ageGroup: " + ageList.toString() +
                 " withWho: " + whoList.toString() +
                 " wether: " + weatherList.toString() +
                 " condition: " + conditionList.toString() +
@@ -265,5 +361,59 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(text);
         return text;
     }
-}
 
+    public void getRslt(){
+        String[] restNames = restrauntReturn.getRestrauntName(indexList.get(retryCount));
+        recomRslt.setText(restNames[0]);
+        retryCount++;
+        recom_text.setText("오늘은 " + restNames[0] + "에서\n식사하시는것은 어떤가요? 🍽️");
+        imgChange(restNames[1]);
+    }
+
+    public void imgChange(String value){
+            switch (value) {
+                case "비빔밥":
+                    recomRlstImg.setImageResource(R.drawable.bibimbap);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "우동":
+                    recomRlstImg.setImageResource(R.drawable.backban);
+                    recomRlstImg.setPadding(48, 48, 48, 48);//임시
+                    break;
+                case "짜장면":
+                case "탕수육":
+                    recomRlstImg.setImageResource(R.drawable.jajang);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "스테이크":
+                    recomRlstImg.setImageResource(R.drawable.stake);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "파스타":
+                case "스파게티":
+                    recomRlstImg.setImageResource(R.drawable.pasta);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "라멘":
+                    recomRlstImg.setImageResource(R.drawable.ramen);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "피자":
+                    break;
+                case "국밥":
+                    recomRlstImg.setImageResource(R.drawable.gukbap);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                case "초밥":
+                case "스시":
+                    recomRlstImg.setImageResource(R.drawable.susi);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+                    break;
+                default:
+                    recomRlstImg.setImageResource(R.drawable.bab);
+                    recomRlstImg.setPadding(48, 48, 48, 48);
+
+            }
+    }
+
+}
