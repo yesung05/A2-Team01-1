@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton recomBackBtn, recomReBtn;
     TextView recomRslt, recom_text, main_text;
-    ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain;
+    ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain, loading;
 
     // 나이대 (CheckBox)
     private CheckBox[] ageCheckBoxes;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton [] categorys;
 //    private boolean [] buttonSel = {false, false, false, false, false ,false, false, false};
     static String prompt;
+
     ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> ageList = new ArrayList<String>();
     ArrayList<String> whoList = new ArrayList<String>();
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         recomReBtn = findViewById(R.id.retryButton);
         recomRslt = findViewById(R.id.rsltText);
         recomRlstImg = findViewById(R.id.rslt_img);
-
+        loading = findViewById(R.id.loading);
         ageCheckBoxes = new CheckBox[]{
                 findViewById(R.id.checkbox_infant),
                 findViewById(R.id.checkbox_child),
@@ -159,36 +161,43 @@ public class MainActivity extends AppCompatActivity {
         mainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 다른 레이아웃 전환
+                // 1. UI 스레드에서 우선 로딩 화면 보여주기
                 main.setVisibility(View.GONE);
                 showRestMain.setVisibility(View.GONE);
                 showSettingMain.setVisibility(View.GONE);
-                recomRlstMain.setVisibility(View.VISIBLE);
-                prompt = toScript();
-                retryCount = 0;
-                GptUse gptSession = new GptUse();
-                gptSession.requestRecommendation();
+                recomRlstMain.setVisibility(View.GONE);
+                loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
 
-
-                try {
-                    GptUse.latch.await();
-                    GptParse parse = new GptParse();
+                // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
+                new Thread(() -> {
+                    prompt = toScript();
+                    retryCount = 0;
+                    GptUse gptSession = new GptUse();
+                    gptSession.requestRecommendation();
 
                     try {
+                        GptUse.latch.await();  // GPT 응답 대기
+                        GptParse parse = new GptParse();
                         indexList = parse.runParse();
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
+
+                        // 3. 결과 도착 후 UI 업데이트는 UI 스레드에서 수행
+                        runOnUiThread(() -> {
+                            loading.setVisibility(View.GONE);         // 로딩 숨기기
+                            recomRlstMain.setVisibility(View.VISIBLE); // 결과 레이아웃 보이기
+                            getRslt();
+//                            Toast.makeText(getApplicationContext(), indexList.toString(), Toast.LENGTH_SHORT).show();
+                        });
+
+                    } catch (InterruptedException | JsonProcessingException e) {
+                        e.printStackTrace();
+//                        runOnUiThread(() ->
+//                                Toast.makeText(getApplicationContext(), "추천 실패: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+//                        );
                     }
-
-                    getRslt();
-                    Toast.makeText(getApplicationContext(), indexList.toString(), Toast.LENGTH_SHORT).show();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-
+                }).start();  // <- Thread 시작
             }
         });
+
         // 근처 식당 보기 네비게이션
         recomReBtn.setOnClickListener(click -> {
             if(retryCount < 5){
@@ -361,7 +370,57 @@ public class MainActivity extends AppCompatActivity {
         String[] restNames = restrauntReturn.getRestrauntName(indexList.get(retryCount));
         recomRslt.setText(restNames[0]);
         retryCount++;
-        recom_text.setText("오늘은 " + restNames[0] + "에서\n식사하시는것은 어떤가요?");
+        recom_text.setText("오늘은 " + restNames[0] + "에서\n식사하시는것은 어떤가요? 🍽️");
+        imgChange(restNames[1]);
+    }
+
+    public void imgChange(String value){
+        switch (value){
+            case "비빔밥":
+                recomRlstImg.setImageResource(R.drawable.bibimbap);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            case "우동":
+                recomRlstImg.setImageResource(R.drawable.backban);
+                recomRlstImg.setPadding(48, 48, 48, 48);//임시
+                break;
+            case "짜장면":
+            case "탕수육":
+                recomRlstImg.setImageResource(R.drawable.jajang);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            case "스테이크":
+                recomRlstImg.setImageResource(R.drawable.stake);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            case "파스타":
+            case "스파게티":
+                recomRlstImg.setImageResource(R.drawable.pasta);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            case "라멘":
+                recomRlstImg.setImageResource(R.drawable.ramen);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            case "피자":
+                break;
+            case "국밥":
+                recomRlstImg.setImageResource(R.drawable.gukbap);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            case "초밥":
+            case "스시":
+                recomRlstImg.setImageResource(R.drawable.susi);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+                break;
+            default:
+                recomRlstImg.setImageResource(R.drawable.bab);
+                recomRlstImg.setPadding(48, 48, 48, 48);
+
+        }
+
+
+
     }
 }
 
