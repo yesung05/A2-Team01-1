@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class GptUse {
 
-    private static String apiKey = "sk-proj-";
+    private static String apiKey = "";
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client;
     private final Gson gson;
@@ -47,7 +47,7 @@ public class GptUse {
         content.append("You are a restaurant recommendation assistant.\n\n")
                 .append("Here is a list of available restaurants in the form of a list where each item is:\n")
                 .append("[index (int), restaurantName (String), rating (double), category (String), subCategory (String), mainMenu1 (String), mainMenu2 (String), mainMenu3 (String)]\n\n")
-                .append("If rating is '-1', is null value:\n")
+                .append("If rating is '-1', is null value. Just think as rating 4.7\n")
                 .append("Here is the full list:\n")
                 .append(RestrauntDatas.RestaurantsJson).append("\n\n")
                 .append("Recommend exactly 5 restaurants that best match the user’s preferences.\n")

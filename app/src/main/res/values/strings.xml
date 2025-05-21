@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">점심 어디가</string>
+    <string name="app_name">오늘의 식당</string>
     <string name="v0_0_1">v0.0.1</string>
+    <string name="SeeNearByRestraunt">근처 식당 보기</string>
 </resources>

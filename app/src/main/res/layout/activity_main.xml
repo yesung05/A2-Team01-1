@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00AD9494">
+    android:background="#FFF3DE">
 
 
 
@@ -86,7 +86,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="72dp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -117,8 +117,8 @@
                         android:layout_gravity="top|center"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
-                        android:layout_marginTop="16dp"
-                        android:src="@drawable/restaurant_img" />
+                        android:layout_marginTop="18dp"
+                        android:src="@drawable/image" />
 
                     <TextView
                         android:id="@+id/recom_restaurant1"
@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|bottom"
                         android:layout_marginBottom="24dp"
-                        android:text="식당명1"
+                        android:text="넙딱집 고척점"
                         android:textColor="#282828"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -160,9 +160,9 @@
                         android:layout_gravity="top|center"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="18dp"
 
-                        android:src="@drawable/restaurant_img" />
+                        android:src="@drawable/iamge2" />
 
                     <TextView
                         android:id="@+id/recom_restaurant2"
@@ -170,7 +170,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|bottom"
                         android:layout_marginBottom="24dp"
-                        android:text="식당명2"
+                        android:text="백소정 고척점"
                         android:textColor="#282828"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -185,9 +185,6 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/seeRestmain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -196,10 +193,15 @@
         android:layout_marginBottom="72dp"
         tools:context=".MainActivity">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="9dp"
+            android:paddingTop="64dp"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="1dp">
@@ -210,6 +212,31 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/seeNearbyRestrant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="#FDF1DC"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/SeeNearByRestraunt"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#8A8A8A"
+            app:layout_constraintTop_toBottomOf="@id/seeNearbyRestrant"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -790,7 +817,7 @@
     <LinearLayout
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="82dp"
         android:layout_gravity="bottom"
         android:layout_marginBottom="0dp"
         android:background="#FDF5E6"
@@ -798,6 +825,7 @@
         android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="24dp"
+
         app:layout_constraintHorizontal_bias="1.0">
 
         <ImageButton
@@ -805,33 +833,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginHorizontal="32dp"
             android:layout_weight="1"
+            android:minWidth="64dp"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Restaurant Selection"
-            app:srcCompat="@drawable/restru_sel" />
+            app:srcCompat="@drawable/new_main_btn"
+            android:scaleType="centerInside"/>
 
         <ImageButton
             android:id="@+id/viewRest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
             android:layout_weight="1"
             android:alpha="0.5"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="View Restaurant"
-            app:srcCompat="@drawable/view_rest_sel" />
+            app:srcCompat="@drawable/new_rest_btn"
+            android:scaleType="centerInside"/>
 
         <ImageButton
             android:id="@+id/viewSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
             android:layout_weight="1"
             android:alpha="0.5"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Settings"
-            app:srcCompat="@drawable/setting_sel" />
+            app:srcCompat="@drawable/new_sett_btn"
+            android:scaleType="centerInside"/>
 
     </LinearLayout>
 
@@ -853,7 +882,8 @@
         android:textColor="#5B5B5B"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/topSpacer" />
+        app:layout_constraintTop_toBottomOf="@+id/topSpacer"
+        android:visibility="visible"/>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
