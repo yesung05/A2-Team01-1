@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     TextView recomRslt, recom_text, main_text;
     ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain, loading;
 
+    ScrollView scrollMain, scrollRslt, scrollSetting;
     // 나이대 (CheckBox)
     private CheckBox[] ageCheckBoxes;
     private RadioGroup rgWho, rgCondition, rgWeather;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         recomRslt = findViewById(R.id.rsltText);
         recomRlstImg = findViewById(R.id.rslt_img);
         loading = findViewById(R.id.loading);
+        scrollMain = findViewById(R.id.scroll1);
+        scrollRslt = findViewById(R.id.scroll2);
+        scrollSetting = findViewById(R.id.scroll3);
         ageCheckBoxes = new CheckBox[]{
                 findViewById(R.id.checkbox_infant),
                 findViewById(R.id.checkbox_child),
@@ -163,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
+            scrollMain.setVisibility(View.GONE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.VISIBLE);
             loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
 
             // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
@@ -207,6 +214,9 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
+            scrollMain.setVisibility(View.VISIBLE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.GONE);
             main.setVisibility(View.VISIBLE);
         });
     }
@@ -219,7 +229,9 @@ public class MainActivity extends AppCompatActivity {
             main.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
-
+            scrollMain.setVisibility(View.GONE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.GONE);
             showRestMain.setVisibility(View.VISIBLE);
             showRestBtn.setAlpha(1f);
             showRecomBtn.setAlpha(0.5f);
@@ -233,6 +245,9 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
+            scrollMain.setVisibility(View.VISIBLE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.GONE);
             main.setVisibility(View.VISIBLE);
 
 
@@ -248,6 +263,9 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.VISIBLE);
+            scrollMain.setVisibility(View.GONE);
+            scrollSetting.setVisibility(View.VISIBLE);
+            scrollRslt.setVisibility(View.GONE);
 
             showRecomBtn.setAlpha(0.5f);
             showRestBtn.setAlpha(0.5f);

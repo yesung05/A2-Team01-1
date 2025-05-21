@@ -9,11 +9,19 @@
 
 
     <!-- 기존 ConstraintLayout -->
+    <ScrollView
+        android:id="@+id/scroll1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToOutline="false"
+        android:visibility="visible"
+        android:scrollbars="none">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FFF3DE"
         android:visibility="visible"
         tools:context=".MainActivity">
@@ -42,7 +50,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="128dp"
             android:orientation="vertical"
-            android:padding="0dp"
+            android:padding="8dp"
+            android:paddingBottom="32dp"
             android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="64dp"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <!--수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중-->
@@ -98,7 +108,7 @@
                     android:id="@+id/square1_Frame"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -107,17 +117,20 @@
                     <ImageView
                         android:id="@+id/recom_sq_1"
                         android:layout_width="match_parent"
-                        android:layout_height="230dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
                         app:srcCompat="@drawable/rectangle_2" />
 
                     <ImageView
                         android:id="@+id/recom_restaurent_img1"
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="top|center"
-                        android:layout_marginTop="10dp"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:layout_marginTop="16dp"
                         android:src="@drawable/restaurant_img" />
 
                     <TextView
@@ -128,7 +141,7 @@
                         android:layout_marginBottom="24dp"
                         android:text="식당명1"
                         android:textColor="#282828"
-                        android:textSize="20dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
 
@@ -138,7 +151,7 @@
                     android:id="@+id/square2_Frame"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_margin="0dp"
                     android:layout_weight="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -147,17 +160,21 @@
                     <ImageView
                         android:id="@+id/recom_sq_2"
                         android:layout_width="match_parent"
-                        android:layout_height="230dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
                         app:srcCompat="@drawable/rectangle_2" />
 
                     <ImageView
                         android:id="@+id/recom_restaurent_img2"
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="top|center"
-                        android:layout_marginTop="10dp"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:layout_marginTop="16dp"
+
                         android:src="@drawable/restaurant_img" />
 
                     <TextView
@@ -168,7 +185,7 @@
                         android:layout_marginBottom="24dp"
                         android:text="식당명2"
                         android:textColor="#282828"
-                        android:textSize="20dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
                 </FrameLayout>
             </LinearLayout>
@@ -177,6 +194,8 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -205,31 +224,21 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/recom_rslt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFF3DE"
-            android:visibility="gone"
-            tools:context=".MainActivity">
-            <!--###################################################-->
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/recom_text"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="28dp"-->
-    <!--            android:background="#FDF5E6"-->
-    <!--            android:gravity="left"-->
-    <!--            android:paddingLeft="8dp"-->
-    <!--            android:paddingTop="24dp"-->
-    <!--            android:paddingRight="8dp"-->
-    <!--            android:text="오늘은 OOO에서 식사하시는 것은 어떠신가요? 🍽️\n️"-->
-    <!--            android:textColor="#5B5B5B"-->
-    <!--            android:textSize="18sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            tools:layout_editor_absoluteX="0dp" />-->
+    <ScrollView
+        android:id="@+id/scroll2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToOutline="false"
+        android:visibility="gone"
+        android:scrollbars="none">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recom_rslt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF3DE"
+        android:visibility="gone"
+        tools:context=".MainActivity">
             <TextView
                 android:id="@+id/recom_text"
                 android:layout_width="match_parent"
@@ -250,6 +259,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="128dp"
+                android:layout_marginBottom="48dp"
                 android:orientation="vertical"
                 android:padding="0dp"
                 android:gravity="center_horizontal"
@@ -315,13 +325,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="64dp">
 
                     <ImageButton
                         android:id="@+id/backButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="42dp"
+                        android:layout_marginRight="42dp"
+                        android:layout_marginLeft="42dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="BackBtn"
                         app:srcCompat="@drawable/back_btn" />
@@ -330,7 +342,8 @@
                         android:id="@+id/retryButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="42dp"
+                        android:layout_marginRight="42dp"
+                        android:layout_marginLeft="42dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="BackBtn"
                         app:srcCompat="@drawable/retry_btn" />
@@ -341,11 +354,21 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scroll3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToOutline="false"
+        android:visibility="gone"
+        android:scrollbars="none">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFF3DE"
             android:visibility="gone"
+            android:layout_marginBottom="64dp"
             android:id="@+id/settingMain"
             >
 
@@ -806,13 +829,13 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </ScrollView>
     <LinearLayout
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="0dp"
         android:background="#FDF5E6"
         android:gravity="center"
         android:orientation="horizontal"
