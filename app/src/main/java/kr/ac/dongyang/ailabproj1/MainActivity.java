@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     TextView recomRslt, recom_text, main_text;
     ConstraintLayout main, showRestMain, showSettingMain, recomRlstMain, loading;
 
+    ScrollView scrollMain, scrollRslt, scrollSetting;
     // 나이대 (CheckBox)
     private CheckBox[] ageCheckBoxes;
     private RadioGroup rgWho, rgCondition, rgWeather;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
+        hideSystemUI();
         setContentView(R.layout.activity_main); // 초기 화면 설정
         mainBtn = findViewById(R.id.recommendBtn);
         showRestBtn = findViewById(R.id.viewRest);
@@ -81,14 +82,17 @@ public class MainActivity extends AppCompatActivity {
         showRestMain = findViewById(R.id.seeRestmain);
         showSettingMain = findViewById(R.id.settingMain);
         recomRlstMain = findViewById(R.id.recom_rslt);
-        recom_text = findViewById(R.id.recom_text);
-        main_text = findViewById(R.id.weatherText);
+//        recom_text = findViewById(R.id.recom_text);
+        main_text = findViewById(R.id.Text);
         //추천 결과 페이지 옵젝트
         recomBackBtn = findViewById(R.id.backButton);
         recomReBtn = findViewById(R.id.retryButton);
         recomRslt = findViewById(R.id.rsltText);
         recomRlstImg = findViewById(R.id.rslt_img);
         loading = findViewById(R.id.loading);
+        scrollMain = findViewById(R.id.scroll1);
+        scrollRslt = findViewById(R.id.scroll2);
+        scrollSetting = findViewById(R.id.scroll3);
         ageCheckBoxes = new CheckBox[]{
                 findViewById(R.id.checkbox_infant),
                 findViewById(R.id.checkbox_child),
@@ -163,7 +167,11 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
-            loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
+            scrollMain.setVisibility(View.GONE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.VISIBLE);// <- 로딩 화면 표시
+//            main_text.setVisibility(View.VISIBLE);
 
             // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
             new Thread(() -> {
@@ -207,7 +215,11 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
+            scrollMain.setVisibility(View.VISIBLE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.GONE);
             main.setVisibility(View.VISIBLE);
+            main_text.setText(texts[(int) (Math.random() * texts.length)]);
         });
     }
 
@@ -219,8 +231,11 @@ public class MainActivity extends AppCompatActivity {
             main.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
-
+            scrollMain.setVisibility(View.GONE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.GONE);
             showRestMain.setVisibility(View.VISIBLE);
+            main_text.setVisibility(View.GONE);
             showRestBtn.setAlpha(1f);
             showRecomBtn.setAlpha(0.5f);
             showSettingBtn.setAlpha(0.5f);
@@ -233,9 +248,12 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
+            scrollMain.setVisibility(View.VISIBLE);
+            scrollSetting.setVisibility(View.GONE);
+            scrollRslt.setVisibility(View.GONE);
             main.setVisibility(View.VISIBLE);
-
-
+            main_text.setVisibility(View.VISIBLE);
+            main_text.setText(texts[(int) (Math.random() * texts.length)]);
             showRecomBtn.setAlpha(1f);
             showRestBtn.setAlpha(0.5f);
             showSettingBtn.setAlpha(0.5f);
@@ -248,7 +266,12 @@ public class MainActivity extends AppCompatActivity {
             showRestMain.setVisibility(View.GONE);
             recomRlstMain.setVisibility(View.GONE);
             showSettingMain.setVisibility(View.VISIBLE);
+            scrollMain.setVisibility(View.GONE);
+            scrollSetting.setVisibility(View.VISIBLE);
+            scrollRslt.setVisibility(View.GONE);
+            main_text.setVisibility(View.VISIBLE);
 
+            main_text.setText("원하는 느낌을 선택해보세요 \n AI가 식당을 추천해줍니다! 🍽");
             showRecomBtn.setAlpha(0.5f);
             showRestBtn.setAlpha(0.5f);
             showSettingBtn.setAlpha(1f);
@@ -262,8 +285,46 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView1);
 
         // 데이터 준비 (아이콘 배열)
-        int[] restaurantIcons = {R.drawable.bab, R.drawable.susi, R.drawable.bab}; // 여러 아이콘을 사용 가능
-        String[] restaurantNames = {"동양미래대학교 학생식당", "고척돈까스", "전주식당"};
+        int[] restaurantIcons = new int[] {
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab,
+                R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab, R.drawable.bab
+        };// 여러 아이콘을 사용 가능
+
+        String[] restaurantNames = {
+                "육회 바른 연어", "백남옥 달인 손만두", "푸라닭", "또봉이 통닭&별난 만두", "본죽&비빔밥",
+                "맥주 뚜껑", "동명", "금별맥주", "빙동댕", "동대문 엽기 떡볶이",
+                "빡가네 갈비후라이", "no more pizza", "청년다방", "3층인데 괜찮아?", "iOTTOi",
+                "GGgo", "베스킨 라빈스", "참이맛 감자탕&순대국", "옛날(꿀) 닭강정", "노랑통닭",
+                "주궁", "유가네 닭갈비", "메가커피", "이삭 토스트", "백소정",
+                "대보칼국수", "롯데리아", "교촌", "소매점 양꼬치", "맘스터치",
+                "비어펍", "투썸플레이", "보드람 치킨", "고척동 삼겹살", "계림원 누릉지 통닭구이",
+                "샐러리아", "삼삼 치킨", "리얼펍&살얼음맥주", "호시타코야끼", "고좌리 뼈 칼국수",
+                "한라참치", "양떼목장", "중식당 청이", "고척돈까스", "백채 김치찌개",
+                "엄마손 전집", "나들이 아구찜", "도담국수", "하우마라", "난연스시",
+                "엄마손 생선구이", "꼭지식당", "고척 칼국수", "별이 빛나는 밤에", "써니네 맷돌 빈대떡",
+                "발발이 추억", "오복 숯불 닭꼬치", "만포 돼지국밥, 순대국", "도연", "육회지존",
+                "한솥", "써브웨이", "매머드익스프레스", "역전우동", "진민네 포차",
+                "역전 할머니 맥주", "와플대학", "일품마라탕", "빨봉분식", "홍콩반점",
+                "빽다방", "놀부 부대찌개&철판구이", "대왕곱창", "대호네 식당", "돈전성시",
+                "오븐마루", "전가복", "청남옥", "에뚜왈", "지니네 밀크빙수",
+                "전주식당", "마라공방", "컴포즈커피", "김밥왕국", "포차천국",
+                "스위치"
+        };
         // 어댑터 설정
         RestaurantAdapter adapter = new RestaurantAdapter(restaurantIcons, restaurantNames);
         recyclerView.setAdapter(adapter);
@@ -364,9 +425,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void getRslt(){
         String[] restNames = restrauntReturn.getRestrauntName(indexList.get(retryCount));
+        main_text.setVisibility(View.VISIBLE);
         recomRslt.setText(restNames[0]);
         retryCount++;
-        recom_text.setText("오늘은 " + restNames[0] + "에서\n식사하시는것은 어떤가요? 🍽️");
+        main_text.setText("오늘은 " + restNames[0] + "에서\n식사하시는것은 어떤가요? 🍽️");
         imgChange(restNames[1]);
     }
 
@@ -415,5 +477,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
     }
-
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        );
+    }
 }
