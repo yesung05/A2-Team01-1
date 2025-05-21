@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="72dp"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <!--수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중수정중-->
@@ -779,6 +779,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="128dp"
+                        android:layout_marginBottom="32dp"
                         android:id="@+id/cpLayout"
                         android:layout_gravity="bottom"
                         android:paddingTop="16dp"
@@ -789,15 +790,16 @@
                             android:layout_height="wrap_content"
                             android:text="Copyrightⓒ2025 SYB, LMC, KKM, CYS \nAll rights reserved."
                             android:textSize="16sp"
-                            android:layout_weight="0.7"
+                            android:layout_weight="0.8"
                             android:layout_gravity="left"/>
                         <TextView
                             android:id="@+id/version"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="v0.0.1"
+                            android:text="@string/v0_0_1"
                             android:textSize="16sp"
-                            android:layout_weight="0.3"
+                            android:layout_weight="0.2"
+                            android:layout_marginBottom="32dp"
                             android:textAlignment="textEnd"
                             />
                     </LinearLayout>

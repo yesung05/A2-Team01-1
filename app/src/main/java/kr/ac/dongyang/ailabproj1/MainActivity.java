@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
+        hideSystemUI();
         setContentView(R.layout.activity_main); // 초기 화면 설정
         mainBtn = findViewById(R.id.recommendBtn);
         showRestBtn = findViewById(R.id.viewRest);
@@ -433,5 +433,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
     }
-
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        );
+    }
 }
