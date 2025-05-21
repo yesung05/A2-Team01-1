@@ -29,20 +29,7 @@
         <!--         기존 레이아웃 내용들 생략 (전체 복사해서 넣으면 됨) -->
         <!--         ... -->
 
-        <TextView
-            android:id="@+id/weatherText"
-            android:layout_width="match_parent"
-            android:layout_height="69dp"
-            android:layout_marginTop="28dp"
-            android:background="#FDF5E6"
-            android:gravity="left"
-            android:padding="8dp"
-            android:text="오늘은 날씨가 많이 춥네요.. 🥶\n몸이 따뜻해지는 음식을 드시는 것이 좋겠어요"
-            android:textColor="#5B5B5B"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
+
 
         <LinearLayout
             android:id="@+id/recommendLayout"
@@ -879,6 +866,22 @@
             app:srcCompat="@drawable/setting_sel" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/Text"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:layout_marginTop="28dp"
+        android:background="#FDF5E6"
+        android:gravity="left"
+        android:padding="8dp"
+        android:text="오늘은 날씨가 많이 춥네요.. 🥶\n몸이 따뜻해지는 음식을 드시는 것이 좋겠어요"
+        android:textColor="#5B5B5B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

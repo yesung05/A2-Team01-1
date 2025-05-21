@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         showRestMain = findViewById(R.id.seeRestmain);
         showSettingMain = findViewById(R.id.settingMain);
         recomRlstMain = findViewById(R.id.recom_rslt);
-        recom_text = findViewById(R.id.recom_text);
-        main_text = findViewById(R.id.weatherText);
+//        recom_text = findViewById(R.id.recom_text);
+        main_text = findViewById(R.id.Text);
         //추천 결과 페이지 옵젝트
         recomBackBtn = findViewById(R.id.backButton);
         recomReBtn = findViewById(R.id.retryButton);
@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
             scrollMain.setVisibility(View.GONE);
             scrollSetting.setVisibility(View.GONE);
             scrollRslt.setVisibility(View.VISIBLE);
-            loading.setVisibility(View.VISIBLE);  // <- 로딩 화면 표시
+            loading.setVisibility(View.VISIBLE);// <- 로딩 화면 표시
+            main_text.setVisibility(View.VISIBLE);
 
             // 2. GPT 요청은 별도의 백그라운드 스레드에서 처리
             new Thread(() -> {
