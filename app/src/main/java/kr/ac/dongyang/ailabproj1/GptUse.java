@@ -22,12 +22,12 @@ import okhttp3.Response;
 
 public class GptUse {
 
-    private static String apiKey = "API_KEY_HERE";
+    private static String apiKey = "";
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client;
     private final Gson gson;
-    static CountDownLatch latch = new CountDownLatch(1);
-    static String gptResponce;
+    CountDownLatch latch = new CountDownLatch(1);
+    String gptResponce;
 
     public static boolean gpt_wait = false;
 
@@ -39,6 +39,7 @@ public class GptUse {
     }
 
     public void requestRecommendation() {
+        gptResponce = null;
         JsonArray messages = new JsonArray();
 
         JsonObject systemMsg = new JsonObject();
@@ -47,8 +48,7 @@ public class GptUse {
         content.append("You are a restaurant recommendation assistant.\n\n")
                 .append("Here is a list of available restaurants in the form of a list where each item is:\n")
                 .append("[index (int), restaurantName (String), rating (double), category (String), subCategory (String), mainMenu1 (String), mainMenu2 (String), mainMenu3 (String)]\n\n")
-                .append("For example:\n")
-                .append("[1, \"맛있는 비빔밥집\", 4.3, \"한식\", \"비빔밥\", \"돌솥비빔밥\", \"불고기비빔밥\", \"김치찌개\"]\n\n")
+                .append("If rating is '-1', is null value. Just think as rating 4.7\n")
                 .append("Here is the full list:\n")
                 .append(RestrauntDatas.RestaurantsJson).append("\n\n")
                 .append("Recommend exactly 5 restaurants that best match the user’s preferences.\n")
@@ -59,6 +59,7 @@ public class GptUse {
                 .append("  {\"index\": 2},\n")
                 .append("  ...\n")
                 .append("]\n\n")
+                .append("Don't recommend '주점' to miner")
                 .append("Be concise and only return the list in the specified format. No explanation needed.");
 
         systemMsg.addProperty("content", content.toString());
@@ -107,15 +108,21 @@ public class GptUse {
                         .get("content").getAsString();
 
                 gptResponce = reply.toString();
+                System.out.println("리플라이.트림");
                 System.out.println(reply.trim());
+                System.out.println("지피티리스폰스");
+                System.out.println(gptResponce);
                 latch.countDown();
 
-                GptParse parse = new GptParse();
-                try {
-                    parse.runParse();
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+
+//                try {
+//                    if(gptResponce != null){
+//
+//                        GptParse.runParse(gptResponce);
+//                    }
+//                } catch (JsonProcessingException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         });
     }
