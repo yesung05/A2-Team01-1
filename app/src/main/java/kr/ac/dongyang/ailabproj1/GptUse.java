@@ -22,12 +22,12 @@ import okhttp3.Response;
 
 public class GptUse {
 
-    private static String apiKey = "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";
+    private static String apiKey = "";
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client;
     private final Gson gson;
-    static CountDownLatch latch = new CountDownLatch(1);
-    static String gptResponce;
+    CountDownLatch latch = new CountDownLatch(1);
+    String gptResponce;
 
     public static boolean gpt_wait = false;
 
@@ -39,6 +39,7 @@ public class GptUse {
     }
 
     public void requestRecommendation() {
+        gptResponce = null;
         JsonArray messages = new JsonArray();
 
         JsonObject systemMsg = new JsonObject();
@@ -106,15 +107,21 @@ public class GptUse {
                         .get("content").getAsString();
 
                 gptResponce = reply.toString();
+                System.out.println("리플라이.트림");
                 System.out.println(reply.trim());
+                System.out.println("지피티리스폰스");
+                System.out.println(gptResponce);
                 latch.countDown();
 
-                GptParse parse = new GptParse();
-                try {
-                    parse.runParse();
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+
+//                try {
+//                    if(gptResponce != null){
+//
+//                        GptParse.runParse(gptResponce);
+//                    }
+//                } catch (JsonProcessingException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         });
     }

@@ -190,13 +190,15 @@ public class MainActivity extends AppCompatActivity {
             new Thread(() -> {
                 prompt = toScript();
                 retryCount = 0;
+
                 GptUse gptSession = new GptUse();
                 gptSession.requestRecommendation();
 
                 try {
-                    GptUse.latch.await();  // GPT 응답 대기
+                    gptSession.latch.await();  // GPT 응답 대기
                     GptParse parse = new GptParse();
-                    indexList = parse.runParse();
+                    System.out.println(gptSession.gptResponce);
+                    indexList = parse.runParse(gptSession.gptResponce);
 
                     // 3. 결과 도착 후 UI 업데이트는 UI 스레드에서 수행
                     runOnUiThread(() -> {
@@ -215,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
                 }).start();  // <- Thread 시작
         });
 
-        // 근처 식당 보기 네비게이션
         recomReBtn.setOnClickListener(click -> {
             if(retryCount < 5){
+
                 recomRlstMain.setVisibility(View.GONE);
                 loading.setVisibility(View.VISIBLE);
                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
@@ -225,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                     recomRlstMain.setVisibility(View.VISIBLE); // 결과 화면 보이기
                     getRslt();                            // 결과 처리 함수 호출
                 }, 2000);
-                getRslt();
             } else {
                 Toast.makeText(getApplicationContext(), "시도 가능한 횟수 초과", Toast.LENGTH_SHORT).show();
             }

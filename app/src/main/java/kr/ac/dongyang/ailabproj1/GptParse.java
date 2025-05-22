@@ -10,15 +10,17 @@ import java.util.List;
 public class GptParse{
 
 
-    public ArrayList<Integer> runParse() throws JsonProcessingException {
+    public static ArrayList<Integer> runParse(String respon) throws JsonProcessingException {
         ArrayList<Integer> indexes = new ArrayList<>();
         ObjectMapper objMap = new ObjectMapper();
-        JsonNode jsonArray = objMap.readTree(GptUse.gptResponce);
+
+        JsonNode jsonArray = objMap.readTree(respon);
 
         for (JsonNode node : jsonArray) {
             indexes.add(node.get("index").asInt());
         }
         System.out.println(indexes.toString());
         return indexes;
+
     }
 }
