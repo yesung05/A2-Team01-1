@@ -48,13 +48,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton [] categorys;
 //    private boolean [] buttonSel = {false, false, false, false, false ,false, false, false};
     static String prompt;
-
+    private RadioButton[] timeRb;
+    ArrayList<String> timeList = new ArrayList<String>();
     ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> ageList = new ArrayList<String>();
     ArrayList<String> whoList = new ArrayList<String>();
     ArrayList<String> conditionList = new ArrayList<String>();
     ArrayList<String> weatherList = new ArrayList<String>();
     ArrayList<String> drinkList = new ArrayList<String>();
+
 
     String [] texts ={
             "빵만 있다면 웬만한 슬픔은 견딜 수 있다. \n -Cervantes",
@@ -96,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
         scrollMain = findViewById(R.id.scroll1);
         scrollRslt = findViewById(R.id.scroll2);
         scrollSetting = findViewById(R.id.scroll3);
+
+        timeRb = new RadioButton[]{
+                findViewById(R.id.breakfest),
+                findViewById(R.id.lunch),
+                findViewById(R.id.dinner),
+                findViewById(R.id.yasik)
+        };
+
         ageCheckBoxes = new CheckBox[]{
                 findViewById(R.id.checkbox_infant),
                 findViewById(R.id.checkbox_child),
@@ -443,7 +453,14 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-
+        for(RadioButton rg : timeRb){
+            rg.setOnClickListener(check -> {
+                if (rg.isChecked()) {
+                    timeList.clear();
+                    timeList.add(rg.getText().toString());
+                }
+            });
+        }
 
         for(CheckBox cb : ageCheckBoxes){
             CheckBox finalCb = cb;
@@ -507,6 +524,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String toScript(){
         String text = "excludedCategory: " + categoryList.toString() +
+                " Time: " + timeList.toString() +
                 " ageGroup: " + ageList.toString() +
                 " withWho: " + whoList.toString() +
                 " wether: " + weatherList.toString() +

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToOutline="false"
-        android:visibility="visible"
+        android:visibility="gone"
         android:scrollbars="none">
 
 
@@ -363,13 +363,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToOutline="false"
-        android:visibility="gone"
+        android:visibility="visible"
         android:scrollbars="none">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFF3DE"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginBottom="64dp"
             android:id="@+id/settingMain"
             >
@@ -495,7 +495,50 @@
                 </HorizontalScrollView>
 
 
+                <TextView
+                    android:id="@+id/text_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="시간대"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
+                <RadioGroup
+                    android:id="@+id/group_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/breakfest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="아침"
+                        android:layout_weight="1"/>
+
+
+                    <RadioButton
+                        android:id="@+id/lunch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="점심"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/dinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="저녁"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/yasik"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="야식"
+                        android:layout_weight="1"/>
+                </RadioGroup>
                 <!-- 나이대 -->
                 <!-- 나이대 -->
                 <TextView
