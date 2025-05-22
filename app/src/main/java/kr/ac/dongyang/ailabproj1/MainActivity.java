@@ -458,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
             rg.setOnClickListener(check -> {
                 if (rg.isChecked()) {
                     timeList.clear();
-                    timeList.add(rg.getText().toString());
+                    timeList.add(rg.getContentDescription().toString());
                 }
             });
         }
@@ -479,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
             rg.setOnClickListener(check -> {
                 if (rg.isChecked()) {
                     whoList.clear();
-                    whoList.add(rg.getText().toString());
+                    whoList.add(rg.getContentDescription().toString());
                 }
             });
         }
@@ -523,14 +523,15 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(drinkList);
     }
 
-    public String toScript(){
-        String text = "excludedCategory: " + categoryList.toString() +
-                " Time: " + timeList.toString() +
-                " ageGroup: " + ageList.toString() +
-                " withWho: " + whoList.toString() +
-                " wether: " + weatherList.toString() +
-                " condition: " + conditionList.toString() +
-                " drink: " + drinkList.toString();
+    public String toScript() {
+        String text = "아래 입력에 따라 가장 적합한 식당을 추천해줘.\n" +
+                "식사 시간대: " + timeList.toString() + "\n" +
+                "제외할 메뉴: " + categoryList.toString() + "\n" +
+                "식사할 나이대: " + ageList.toString() + "\n" +
+                "누구랑 먹을지: " + whoList.toString() + "\n" +
+                "날씨: " + weatherList.toString() + "\n" +
+                "기분: " + conditionList.toString() + "\n" +
+                "같이 마실 음료: " + drinkList.toString() + "\n";
         System.out.println(text);
         return text;
     }

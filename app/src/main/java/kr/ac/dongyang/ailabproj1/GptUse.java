@@ -59,6 +59,7 @@ public class GptUse {
                 .append("  {\"index\": 2},\n")
                 .append("  ...\n")
                 .append("]\n\n")
+                .append("Don't recommend '주점' to miner")
                 .append("Be concise and only return the list in the specified format. No explanation needed.");
 
         systemMsg.addProperty("content", content.toString());
