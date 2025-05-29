@@ -48,7 +48,7 @@ public class GptUse {
         content.append("You are a restaurant recommendation assistant.\n\n")
                 .append("Here is a list of available restaurants in the form of a list where each item is:\n")
                 .append("[index (int), restaurantName (String), rating (double), category (String), subCategory (String), mainMenu1 (String), mainMenu2 (String), mainMenu3 (String)]\n\n")
-                .append("If rating is '-1', is null value. Just think as rating 4.7\n")
+                .append("If rating is '-1', is null value. Just think as rating 4.85\n")
                 .append("Here is the full list:\n")
                 .append(RestrauntDatas.RestaurantsJson).append("\n\n")
                 .append("Recommend exactly 5 restaurants that best match the user’s preferences.\n")
@@ -59,7 +59,9 @@ public class GptUse {
                 .append("  {\"index\": 2},\n")
                 .append("  ...\n")
                 .append("]\n\n")
-                .append("Don't recommend '주점' to miner")
+                .append("Don't recommend '주점' to kids\n" +
+                        "No duplication on index\n" +
+                        "focus on menu and category and subCategory. Don't focus on rating")
                 .append("Be concise and only return the list in the specified format. No explanation needed.");
 
         systemMsg.addProperty("content", content.toString());
@@ -72,7 +74,7 @@ public class GptUse {
         messages.add(userMsg);
 
         JsonObject jsonBody = new JsonObject();
-        jsonBody.addProperty("model", "gpt-3.5-turbo");
+        jsonBody.addProperty("model", "gpt-4-turbo");
         jsonBody.add("messages", messages);
 
         RequestBody body = RequestBody.create(
